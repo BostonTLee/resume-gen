@@ -1,0 +1,17 @@
+\section{Experience}
+
+%Skills
+\textbf{Languages: }
+\VAR{', '.join(data.skills.languages)}\\
+\textbf{Tools: }
+\VAR{', '.join(data.skills.tools)}
+
+%Projects
+\begin{itemize}[noitemsep]
+\BLOCK{for project in data.projects}
+\item \projectListing
+	{\VAR{project.title}}
+	{\VAR{project.date}}
+	{\VAR{project.description}}
+\BLOCK{ endfor }
+\end{itemize}
