@@ -11,7 +11,7 @@ def escape_latex(val):
     return val.replace("~", "$\sim$").replace("%", "\%")
 
 def format_list(input_list):
-	return ", ".join([str(item) for item in input_list])
+    return ", ".join([str(item) for item in input_list])
 
 def write_rendered_tex_doc(cv_dict, output_filepath):
 	rendered = template.render(data=cv_dict)
