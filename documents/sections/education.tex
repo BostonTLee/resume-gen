@@ -1,9 +1,0 @@
-\section{Education}
-\BLOCK{for education in data.education}
-	\textbf{\VAR{education.entity}}\\
-	\VAR{education.location} \\
-	\BLOCK{for degree in education.degrees}
-	\VAR{degree.title} (\textit{\VAR{degree.honors}}) \\
-	\BLOCK{endfor}
-	GPA: \VAR{education.gpa}
-\BLOCK{endfor}
