@@ -32,16 +32,6 @@ class LatexVisitor:
 
     def visitResume(self, resume: Resume):
 
-        # self.document.append(Command("titleformat", Command("vspace", "-3pt")))
-        # """
-        # \titleformat{\section}
-        # {
-        #     \vspace{-3pt}\scshape\raggedright\large
-        # }{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
-        # """
-        # import textwrap
-        # self.document.append(utils.NoEscape(
-
         #     textwrap.dedent(
         #     r"""
         #     \titleformat{\section}{
