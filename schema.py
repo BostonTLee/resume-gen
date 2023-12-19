@@ -7,19 +7,22 @@ class Profile(BaseModel):
     name: str
     email: str
     phone: str
-    linkedin: Optional[str]
-    site: Optional[str]
+    linkedin: Optional[str] = None
+    site: Optional[str] = None
 
 
 class Education(BaseModel):
     institution: str
     location: str
     degree: str
-    gpa: float
-    honors: Optional[str]
+    gpa: Optional[float] = None
+    honors: Optional[str] = None
     start_date: datetime.date
     end_date: Optional[datetime.date] = None
 
+
+class Bullet(BaseModel):
+    content: str
 
 class Job(BaseModel):
     title: str
@@ -27,8 +30,7 @@ class Job(BaseModel):
     location: str
     start_date: datetime.date
     end_date: Optional[datetime.date] = None
-    description: List[str]
-
+    description: List[Bullet]
 
 class Leadership(BaseModel):
     title: str

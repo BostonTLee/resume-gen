@@ -77,7 +77,7 @@ class LatexVisitor:
         # self.document.append(Command("titleformat", utils.NoEscape(r"\titlerule")))
         self.visitProfile(resume.profile)
         self.visitEmployment(resume.work)
-        self.visitSkillsSection(resume)
+        # self.visitSkillsSection(resume)
         self.visitEducationSection(resume.education)
         if self.filename is None:
             print(self.document.dumps())
@@ -96,9 +96,15 @@ class LatexVisitor:
                 self.document.append(profile.email)
         with self.document.create(MiniPage(arguments=utils.NoEscape(r"0.5\textwidth"))):
             with self.document.create(FlushRight()):
-                self.document.append(Command("url", utils.NoEscape(profile.linkedin)))
-                self.document.append(LineBreak())
-                self.document.append(Command("url", utils.NoEscape(profile.site)))
+                if profile.linkedin is not None:
+                    self.document.append(Command("url", utils.NoEscape(profile.linkedin)))
+                    self.document.append(LineBreak())
+                else:
+                    self.document.append(LineBreak())
+                if profile.site is not None:
+                    self.document.append(Command("url", utils.NoEscape(profile.site)))
+                else:
+                    self.document.append(LineBreak())
         self.document.append(LineBreak())
 
     def visitJob(self, job: Job):
@@ -148,9 +154,11 @@ class LatexVisitor:
             with self.document.create(FlushLeft()):
                 self.document.append(utils.bold(education.degree))
                 # self.document.append(LineBreak())
-                self.document.append(", ")
-                self.document.append(utils.italic(education.honors))
-                self.document.append(", GPA: " + str(education.gpa))
+                if education.honors is not None:
+                    self.document.append(", ")
+                    self.document.append(utils.italic(education.honors))
+                if education.gpa is not None:
+                    self.document.append(", GPA: " + str(education.gpa))
                 self.document.append(LineBreak())
                 self.document.append(utils.bold(education.institution))
                 self.document.append(LineBreak())
