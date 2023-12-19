@@ -77,7 +77,7 @@ class LatexVisitor:
         # self.document.append(Command("titleformat", utils.NoEscape(r"\titlerule")))
         self.visitProfile(resume.profile)
         self.visitEmployment(resume.work)
-        # self.visitSkillsSection(resume)
+        self.visitSkillsSection(resume)
         self.visitEducationSection(resume.education)
         if self.filename is None:
             print(self.document.dumps())
