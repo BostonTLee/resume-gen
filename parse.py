@@ -10,6 +10,7 @@ import click
 
 from schema import Resume
 from latex_visitor import LatexVisitor
+from util import omit_sensitive_info
 
 
 logging_filename_datetime = datetime.datetime.now().isoformat()
@@ -29,13 +30,14 @@ logger.disabled = True
     default=None,
     help="The basename of the resulting file",
 )
+@click.option("--omit-sensitive", is_flag=True)
 @click.option(
     "--log-level",
     required=False,
     default=None,
     help="Enable logging and set the log level",
 )
-def cli(file: click.File, output_file_base: str, log_level: bool):
+def cli(file: click.File, output_file_base: str, omit_sensitive: bool, log_level: str):
     if log_level is not None:
         logger.setLevel(log_level.upper())
         click.echo(f"Logging to {logging_filename}", err=True)
@@ -61,6 +63,8 @@ def cli(file: click.File, output_file_base: str, log_level: bool):
         )
         sys.exit(1)
     resume = Resume.model_validate(resume_raw)
+    if omit_sensitive:
+        resume = omit_sensitive_info(resume)
     latex_visitor = LatexVisitor(output_file_base)
     latex_visitor.visitResume(resume)
 
