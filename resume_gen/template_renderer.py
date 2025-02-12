@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from resume_gen.schema import Resume
 
@@ -66,9 +67,13 @@ def prepare_resume_data(resume: Resume):
 
 def render_resume(resume: Resume, output_file: str):
     """Render resume data into LaTeX using the template."""
+    # Find the template relative to the package root
+    package_root = Path(__file__).parent.parent
+    templates_dir = package_root / 'templates'
+    
     # Setup Jinja environment with LaTeX-friendly delimiters
     env = Environment(
-        loader=FileSystemLoader(os.path.dirname(__file__)),
+        loader=FileSystemLoader(templates_dir),
         block_start_string='<%',
         block_end_string='%>',
         variable_start_string='<<',
@@ -80,7 +85,7 @@ def render_resume(resume: Resume, output_file: str):
     )
     
     # Get template
-    template = env.get_template('template.tex')
+    template = env.get_template('resume.tex.j2')
     
     # Prepare data
     data = prepare_resume_data(resume)
