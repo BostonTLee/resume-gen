@@ -1,0 +1,161 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in,top=0.5in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[colorlinks, urlcolor=blue]{hyperref}
+\usepackage{lmodern}
+\usepackage{textcomp}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+\begin{document}
+\pagestyle{empty}
+\normalsize
+\setitemize{noitemsep}
+\urlstyle{same}
+\titleformat{\section}{\Large\scshape}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+\titlespacing*{\section}{0pt}{2ex}{1ex}
+
+% Header
+\begin{center}
+\LARGE\textbf{<<profile.name>>}
+
+\vspace{0.5em}
+\normalsize
+<<profile.phone>> \textbar{} <<profile.email>>
+<%- if profile.linkedin or profile.site %>
+\\[0.5ex]<%- endif %>
+<%- if profile.linkedin %>\url{<<profile.linkedin>>}<%- endif %><%- if profile.site %><%- if profile.linkedin %> \textbar{} <%- endif %>\url{<<profile.site>>}<%- endif %>
+\end{center}
+
+<%- if education %>
+\section*{Education}
+<%- for edu in education %>
+\noindent
+\begin{minipage}{0.75\textwidth}
+\begin{flushleft}
+\textbf{<<edu.institution>>}
+\linebreak
+\textbf{<<edu.degree>>}
+<%- if edu.honors %>
+\linebreak
+<<edu.honors>>
+<%- endif %>
+\end{flushleft}
+\end{minipage}%
+\begin{minipage}{0.25\textwidth}
+\begin{flushright}
+\raggedleft
+\textbf{<<edu.date_range>>}
+\linebreak
+\textbf{<<edu.location>>}
+\end{flushright}
+\end{minipage}
+<%- if edu.gpa %>
+\begin{flushleft}
+GPA: <<edu.gpa>>
+\end{flushleft}
+<%- endif %>
+\vspace{1em}
+<%- endfor %>
+<%- endif %>
+
+
+<%- if work %>
+\section*{Professional Experience}
+<%- for job in work %>
+\noindent
+\begin{minipage}{0.75\textwidth}
+\begin{flushleft}
+\textbf{<<job.title>>}
+\linebreak
+\textbf{<<job.employer>>}
+\end{flushleft}
+\end{minipage}%
+\begin{minipage}{0.25\textwidth}
+\begin{flushright}
+\raggedleft
+\textbf{<<job.date_range>>}
+\linebreak
+\textbf{<<job.location>>}
+\end{flushright}
+\end{minipage}
+\vspace{0.5em}
+\begin{itemize}
+<%- for bullet in job.description %>
+\item <<bullet.content>>
+<%- endfor %>
+\end{itemize}
+\vspace{0.5em}
+<%- endfor %>
+<%- endif %>
+
+<%- if languages or tools %>
+\section*{Technical Skills}
+\begin{itemize}[leftmargin=*]
+<%- if languages %>\item \textbf{Programming Languages:} <<languages|join(", ")>><%- endif %>
+<%- if tools %>\item \textbf{Technologies \& Tools:} <<tools|join(", ")>><%- endif %>
+\end{itemize}
+<%- endif %>
+
+<%- if awards %>
+\section*{Honors \& Awards}
+<%- for award in awards %>
+\noindent
+\textbf{<<award.title>>} \hfill {<< award.dates|map('format_date')|join(', ') >>}
+\\[0.2ex]
+\textit{<<award.awarder>>}
+\begin{itemize}
+\item <<award.summary>>
+\end{itemize}
+<%- endfor %>
+<%- endif %>
+
+<%- if leadership %>
+\section*{Leadership \& Service}
+<%- for role in leadership %>
+\noindent
+\begin{minipage}{0.75\textwidth}
+\begin{flushleft}
+\textbf{<<role.title>>}
+\linebreak
+\textbf{<<role.entity>>}
+\end{flushleft}
+\end{minipage}%
+\begin{minipage}{0.25\textwidth}
+\begin{flushright}
+\raggedleft
+\textbf{<<role.start_date.strftime('%b %Y')>> - <<role.end_date.strftime('%b %Y')>>}
+\linebreak
+\textbf{<<role.location>>}
+\end{flushright}
+\end{minipage}
+\vspace{0.5em}
+\begin{itemize}
+<%- for desc in role.description %>
+\item <<desc>>
+<%- endfor %>
+\end{itemize}
+<%- endfor %>
+<%- endif %>
+
+
+<%- if projects %>
+\section*{Projects}
+<%- for project in projects %>
+\noindent
+\textbf{<<project.title>>} \hfill <<project.date.strftime('%b %Y')>>
+<%- if project.link %>
+\\[0.2ex]
+\url{<<project.link>>}
+<%- endif %>
+\begin{itemize}
+\item <<project.description>>
+\end{itemize}
+<%- endfor %>
+<%- endif %>
+
+\end{document}
