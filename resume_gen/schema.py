@@ -1,6 +1,7 @@
-from typing import List, Optional
-from pydantic import BaseModel
 import datetime
+from typing import List, Optional
+
+from pydantic import BaseModel
 
 
 class Profile(BaseModel):
@@ -24,6 +25,7 @@ class Education(BaseModel):
 class Bullet(BaseModel):
     content: str
 
+
 class Job(BaseModel):
     title: str
     employer: str
@@ -31,6 +33,7 @@ class Job(BaseModel):
     start_date: datetime.date
     end_date: Optional[datetime.date] = None
     description: List[Bullet]
+
 
 class Leadership(BaseModel):
     title: str

@@ -1,5 +1,6 @@
 from resume_gen.schema import Resume
 
+
 def omit_sensitive_info(resume: Resume) -> Resume:
     if resume.profile and resume.profile.email:
         resume.profile.email = "(Email omitted)"
